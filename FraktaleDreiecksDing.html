@@ -1,0 +1,99 @@
+<html>
+ <head>
+  <script type="application/javascript">
+function draw() {
+  var canvas = document.getElementById('canvas');
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    start = [150,10];
+	ctx.moveTo(150, 10);
+	erster = [25,250];
+    ctx.lineTo(erster[0], erster[1]);
+	
+	zweiter = [300,200];
+    ctx.lineTo(zweiter[0], zweiter[1]);
+	
+	unsereEcken = [start,erster,zweiter];
+    ctx.closePath();
+    ctx.stroke();
+	i = 0;
+	var point = [150,50];
+	
+	ctx.moveTo(point[0],point[1]);
+	draw_dot(point[0],point[1]);
+	console.log(zweiter);
+	point = half(zweiter,point);
+	draw_dot(point[0],point[1]);
+	
+	setTimeout(sleepTimer, 3000); 
+	
+	var it = 0;
+
+	while (it <10000){
+	//	setTimeout(sleepTimer, 3000); 
+		zufällig = getRandomIntInclusive(0,2);
+	//	console.log(unsereEcken[zufällig]);
+		point = half(unsereEcken[zufällig],point);
+		//console.log(unsereEcken[1]);
+		//point = half(unsereEcken[1],point);
+		draw_dot(point[0],point[1]);
+		ctx.stroke();
+		it++;
+	}
+	
+	//draw_dot(x_neu,y_neu);
+  }
+}
+
+function sleepTimer(){
+console.log("Sleep");
+}
+
+
+function half(scheitel, punkt){
+	console.log(scheitel);
+	console.log(punkt);
+	var x_neu;
+	if(scheitel[0] < punkt[0]){
+		console.log(punkt[0]);
+		x_neu = punkt[0]-scheitel[0];
+		console.log("punkt minus scheitel");
+		console.log(x_neu/2);
+		x_neu = x_neu/2+scheitel[0];
+	}else{
+		x_neu = scheitel[0]-punkt[0];
+		x_neu = x_neu/2+punkt[0];
+	}
+	var y_neu;
+	if(scheitel[1] < punkt[1]){
+		y_neu = punkt[1]-scheitel[1];
+		y_neu = y_neu/2+scheitel[1];
+	}else{
+		y_neu = scheitel[1]-punkt[1];
+		y_neu = y_neu/2+punkt[1];
+	}
+	console.log(x_neu);
+	console.log(y_neu);
+	return [x_neu,y_neu];
+}
+
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min +1)) + min;
+}
+
+function draw_dot(x,y){
+var ctx = canvas.getContext('2d');
+ctx.fillRect(x,y,2,2)
+
+}
+  </script>
+ </head>
+ <body onload="draw();">
+   <canvas id="canvas" width="1000" height="1000"></canvas>
+ </body>
+</html>
